@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Conchi · Asistente de Voz · La Madre del Cordero</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:#1a0500}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#2c0a00,#0d0200);padding:20px}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.2);border-radius:24px;padding:36px;width:100%;max-width:420px}
+.logo{text-align:center;margin-bottom:24px}.logo h1{font-family:'Cormorant Garamond',serif;font-size:26px;color:#fff;font-style:italic;font-weight:300}.logo p{font-size:10px;letter-spacing:3px;color:rgba(200,169,110,.6);text-transform:uppercase;margin-top:4px}
+.kr{display:flex;gap:8px;margin-bottom:16px}.ki{flex:1;padding:9px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(200,169,110,.2);border-radius:10px;color:#fff;font-size:12px;outline:none;font-family:'DM Sans',sans-serif}.ki::placeholder{color:rgba(255,255,255,.2)}.ks{padding:9px 14px;border-radius:10px;background:rgba(200,169,110,.15);border:1px solid rgba(200,169,110,.3);color:rgba(200,169,110,.9);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.er{background:rgba(200,50,50,.1);border:1px solid rgba(200,50,50,.3);border-radius:8px;padding:8px 12px;font-size:11px;color:#ff8080;margin-bottom:12px;display:none}.er.show{display:block}
+.oa{display:flex;flex-direction:column;align-items:center;margin:8px 0 18px}
+.orb{width:88px;height:88px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c94a1a,#8B1a00 50%,#4a0e00);border:1px solid rgba(200,169,110,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:0 4px 20px rgba(139,26,0,.5);transition:transform .2s}.orb:hover{transform:scale(1.05)}.orb.on{animation:pb 2s ease-in-out infinite}@keyframes pb{0%,100%{box-shadow:0 4px 40px rgba(139,26,0,.9),0 0 0 2px rgba(200,169,110,.5)}50%{box-shadow:0 4px 60px rgba(200,80,0,.9),0 0 0 4px rgba(200,169,110,.3)}}.orb svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bs{display:flex;gap:3px;align-items:center;height:20px;margin-bottom:8px}.b{width:3px;border-radius:3px;background:rgba(200,169,110,.5);height:4px;transition:height .1s}
+.st{font-size:12px;color:rgba(255,255,255,.4);text-align:center}.st.on{color:rgba(200,169,110,.8)}
+.tr{background:rgba(0,0,0,.25);border:1px solid rgba(200,169,110,.1);border-radius:12px;padding:12px;height:130px;overflow-y:auto;margin-bottom:14px;font-size:12px}.em{color:rgba(255,255,255,.2);text-align:center;padding-top:36px;font-style:italic;font-size:12px}
+.mu,.ma{margin-bottom:8px;line-height:1.5}.mu{color:rgba(255,255,255,.6)}.mu::before{content:'Tu  ';font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase}.ma{color:rgba(232,213,163,.9)}.ma::before{content:'Conchi  ';font-size:9px;color:rgba(200,169,110,.6);letter-spacing:1px;text-transform:uppercase}
+.cb{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#c94a1a,#8B1a00);color:#fff;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 4px 16px rgba(139,26,0,.4);transition:all .2s;font-family:'DM Sans',sans-serif}.cb:hover{transform:translateY(-1px)}.cb.on{background:linear-gradient(135deg,#1a5c1a,#0d3d0d)}
+.nt{text-align:center;font-size:10px;color:rgba(255,255,255,.2);margin-top:8px;letter-spacing:.3px}
+.dbg{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,0,.15);border-radius:8px;padding:8px;font-size:10px;color:rgba(255,255,0,.6);margin-top:10px;max-height:90px;overflow-y:auto;font-family:monospace;display:none}.dbg.show{display:block}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo"><h1>La Madre del Cordero</h1><p>Conchi · Asistente de voz</p></div>
+  <div class="kr"><input class="ki" id="ki" type="password" placeholder="Gemini API Key (AIza...)"/><button class="ks" onclick="sv()">Guardar</button></div>
+  <div class="er" id="er"></div>
+  <div class="oa">
+    <div class="orb" id="orb" onclick="tg()">
+      <svg id="ic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+    </div>
+    <div class="bs"><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div></div>
+    <div class="st" id="st">Pulsa el microfono para hablar con Conchi</div>
+  </div>
+  <div class="tr" id="tr"><div class="em">La conversacion aparecera aqui...</div></div>
+  <button class="cb" id="btn" onclick="tg()">Iniciar llamada con Conchi</button>
+  <div class="nt">Requiere microfono - Gemini Live API</div>
+  <div class="dbg" id="dbg"></div>
+</div>
+<script>
+const P="Eres Conchi, recepcionista de La Madre del Cordero, restaurante manchego en Albacete. NUNCA digas que eres IA. Tono calido, cercano, manchego. Muletillas: pues, a ver, claro que si, ea, faltaria mas. SALUDO OBLIGATORIO: di exactamente Hola soy Conchi de La Madre del Cordero en que puedo ayudarle. HORARIO: martes a domingo comidas 13:30-16:00 cenas 20:30-23:30 lunes cerrado. CARTA: Croqueta de cordero 4.50 euros entrante, Tartar de pisto 8 euros, Gazpacho almendra 6.50 euros, Lomo de orza 9 euros, Arroz meloso de conejo 14.95 euros PLATO ESTRELLA, Perdiz escabechada 9 euros, postres todos a 9 euros. Menu Raices 75 euros 3 entrantes 3 principales 3 postres mas cordero lechal exclusivo maridaje 30 euros mas. Menu Tradicion 60 euros mas sencillo. RESERVAS: pide nombre completo personas dia hora no lunes telefono. Di le llamamos para confirmar en 2 horas. NUNCA confirmes tu la reserva. MAXIMO 20 palabras por respuesta. Telefono restaurante 967 21 00 00.";
+let K="",AC=false,SS=null,AX=null,PR=null,SR=null,SM=null,NT=0,BI=null;
+function dbg(m){const e=document.getElementById("dbg");if(!e)return;e.classList.add("show");e.innerHTML+=m+"<br>";e.scrollTop=e.scrollHeight;console.log(m);}
+function sv(){const v=document.getElementById("ki").value.trim();if(!v)return;K=v;st("API Key guardada",false);dbg("Key: "+v.substring(0,12)+"...");setTimeout(()=>st("Pulsa el microfono para hablar con Conchi",false),2000);}
+function st(t,on){const e=document.getElementById("st");e.textContent=t;e.className="st"+(on?" on":"");}
+function er(m){const e=document.getElementById("er");e.textContent=m;e.classList.add("show");dbg("ERR: "+m);setTimeout(()=>e.classList.remove("show"),8000);}
+function am(r,t){document.querySelector(".em")?.remove();const tr=document.getElementById("tr");const d=document.createElement("div");d.className=r==="user"?"mu":"ma";d.textContent=t;tr.appendChild(d);tr.scrollTop=tr.scrollHeight;}
+function br(on){if(BI){clearInterval(BI);BI=null;}if(!on){document.querySelectorAll(".b").forEach(b=>b.style.height="4px");return;}BI=setInterval(()=>document.querySelectorAll(".b").forEach(b=>b.style.height=(4+Math.random()*18)+"px"),90);}
+function ui(on){document.getElementById("orb").className="orb"+(on?" on":"");document.getElementById("btn").className="cb"+(on?" on":"");document.getElementById("btn").textContent=on?"Finalizar llamada":"Iniciar llamada con Conchi";}
+function f2(a){const b=new ArrayBuffer(a.length*2);const v=new DataView(b);for(let i=0;i<a.length;i++){const s=Math.max(-1,Math.min(1,a[i]));v.setInt16(i*2,s<0?s*0x8000:s*0x7FFF,true);}return v;}
+function tb(buf){const b=new Uint8Array(buf);let s="";for(let i=0;i<b.byteLength;i++)s+=String.fromCharCode(b[i]);return btoa(s);}
+async function pl(d){
+  if(!AX)return;
+  try{
+    const raw=atob(d);const bytes=new Uint8Array(raw.length);
+    for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+    const s16=new Int16Array(bytes.buffer);const f=new Float32Array(s16.length);
+    for(let i=0;i<s16.length;i++)f[i]=s16[i]/32768;
+    const buf=AX.createBuffer(1,f.length,24000);buf.getChannelData(0).set(f);
+    const x=AX.createBufferSource();x.buffer=buf;x.connect(AX.destination);
+    const now=AX.currentTime;if(NT<now)NT=now;x.start(NT);NT+=buf.duration;
+    dbg("PCM audio: "+f.length+"smp "+buf.duration.toFixed(2)+"s");
+  }catch(e){dbg("audio err: "+e.message);}
+}
+async function go(){
+  if(!K){er("Introduce tu Gemini API Key");return;}
+  try{
+    st("Conectando...",false);dbg("Start...");
+    SM=await navigator.mediaDevices.getUserMedia({audio:{sampleRate:16000,channelCount:1}});
+    AX=new AudioContext({sampleRate:16000});
+    dbg("Mic+AudioCtx OK");
+    const{GoogleGenAI,Modality}=await import("https://esm.sh/@google/genai@1.43.0");
+    const ai=new GoogleGenAI({apiKey:K});
+    dbg("SDK loaded");
+    SS=await ai.live.connect({
+      model:"gemini-2.0-flash-live-001",
+      config:{responseModalities:["AUDIO","TEXT"],systemInstruction:P,speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:"Aoede"}}}},
+      callbacks:{
+        onopen:()=>{
+          AC=true;ui(true);br(true);st("Conchi te esta escuchando...",true);
+          dbg("Session OPEN");
+          SS.sendClientContent({turns:[{role:"user",parts:[{text:"Hola"}]}],turnComplete:true});
+        },
+        onmessage:async(m)=>{
+          dbg("MSG:"+JSON.stringify(m).substring(0,200));
+          if(!m)return;
+          if(m.data){await pl(m.data);return;}
+          if(!m.serverContent)return;
+          const c=m.serverContent;
+          if(c.modelTurn?.parts)for(const p of c.modelTurn.parts){
+            if(p.text)am("agent",p.text);
+            if(p.inlineData?.data)await pl(p.inlineData.data);
+          }
+          if(c.outputTranscription?.text)am("agent",c.outputTranscription.text);
+          if(c.inputTranscription?.text)am("user",c.inputTranscription.text);
+        },
+        onerror:(e)=>{dbg("ERR:"+JSON.stringify(e));er("Error: "+(e.message||JSON.stringify(e)));sp();},
+        onclose:(e)=>{dbg("CLOSE:"+JSON.stringify(e));if(AC)sp();}
+      }
+    });
+    SR=AX.createMediaStreamSource(SM);PR=AX.createScriptProcessor(4096,1,1);
+    PR.onaudioprocess=(e)=>{
+      if(!SS||!AC)return;
+      SS.sendRealtimeInput({audio:{data:tb(f2(e.inputBuffer.getChannelData(0)).buffer),mimeType:"audio/pcm;rate=16000"}});
+    };
+    SR.connect(PR);PR.connect(AX.destination);
+    dbg("Mic stream connected");
+  }catch(e){dbg("START ERR:"+e.message);er("Error: "+e.message);sp();}
+}
+function sp(){
+  AC=false;
+  try{SS?.close();}catch(e){}try{PR?.disconnect();}catch(e){}try{SR?.disconnect();}catch(e){}
+  try{SM?.getTracks().forEach(t=>t.stop());}catch(e){}try{AX?.close();}catch(e){}
+  SS=PR=SR=SM=AX=null;NT=0;br(false);ui(false);
+  st("Llamada finalizada.",false);dbg("Stopped");
+}
+function tg(){AC?sp():go();}
+document.getElementById("ki").addEventListener("keydown",e=>{if(e.key==="Enter")sv();});
+</script>
+</body>
+</html>
